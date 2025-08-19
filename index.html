@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentasi Training Profesional: BTPN Syariah Unggul 2026</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* Custom Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+            overflow: hidden; /* Mencegah scroll manual */
+        }
+
+        /* Palet Warna */
+        :root {
+            --moss-green: #556B2F; /* Hijau Lumut */
+            --orange: #FF8C00;      /* Orange */
+            --blue: #4682B4;        /* Biru */
+            --navy-blue: #000080;   /* Biru Dongker */
+            --white: #FFFFFF;
+            --light-gray: #f0f4f8;
+            --dark-gray: #333333;
+        }
+
+        .bg-navy-blue { background-color: var(--navy-blue); }
+        .bg-moss-green { background-color: var(--moss-green); }
+        .bg-orange { background-color: var(--orange); }
+        .bg-blue { background-color: var(--blue); }
+        .bg-dark-gray { background-color: var(--dark-gray); }
+        .text-orange { color: var(--orange); }
+
+        /* Slide Container */
+        .slide-container {
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 100%; /* Mulai dari luar layar kanan */
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1.5rem; /* Padding default untuk mobile */
+        }
+        
+        @media (min-width: 768px) {
+            .slide {
+                padding: 2rem 4rem; /* Padding untuk desktop */
+            }
+        }
+
+
+        .slide.active {
+            left: 0;
+            opacity: 1;
+        }
+        
+        .slide.prev {
+            left: -100%;
+            opacity: 0;
+        }
+
+        /* Animasi untuk Poin-poin */
+        .animated-item {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .slide.active .animated-item {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Menambahkan delay untuk setiap item */
+        .slide.active .delay-1 { transition-delay: 0.2s; }
+        .slide.active .delay-2 { transition-delay: 0.4s; }
+        .slide.active .delay-3 { transition-delay: 0.6s; }
+        .slide.active .delay-4 { transition-delay: 0.8s; }
+        .slide.active .delay-5 { transition-delay: 1.0s; }
+
+        /* Styling tambahan */
+        .card {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .icon-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+         @media (min-width: 768px) {
+            .icon-circle {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+        }
+        
+        .nav-button {
+            transition: all 0.3s ease;
+        }
+        .nav-button:hover {
+            transform: scale(1.1);
+            background-color: var(--orange);
+            color: var(--white);
+        }
+        
+        .progress-bar-container {
+            position: absolute;
+            bottom: 5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 3rem); /* Lebar untuk mobile */
+            max-width: 800px;
+        }
+        @media (min-width: 768px) {
+            .progress-bar-container {
+                 width: calc(100% - 8rem); /* Lebar untuk desktop */
+            }
+        }
+
+        .progress-bar {
+            transition: width 0.8s ease-in-out;
+        }
+        
+        /* EFEK HIGHLIGHT BARU */
+        .highlightable {
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            border-radius: 0.75rem; /* 12px */
+            padding: 0.5rem;
+            margin: -0.5rem; /* Menetralkan padding agar layout tidak berantakan */
+        }
+
+        .highlightable:hover {
+            transform: scale(1.03);
+            background-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 25px rgba(255, 140, 0, 0.5); /* Glowing orange effect */
+            cursor: pointer;
+        }
+        
+        /* Khusus untuk card agar tidak double padding */
+        .card.highlightable {
+            padding: 1.5rem;
+            margin: 0;
+        }
+        @media (max-width: 767px) {
+            .card.highlightable {
+                padding: 1.5rem;
+            }
+        }
+
+    </style>
+</head>
+<body class="bg-light-gray">
+
+    <div class="slide-container">
+
+        <!-- Slide 1: Judul -->
+        <section id="slide-1" class="slide active bg-navy-blue text-white flex-col text-center">
+            <div class="animated-item">
+                <img src="https://www.btpnsyariah.com/image/logo-header.png" alt="BTPN Syariah Logo" class="h-12 md:h-16 mx-auto mb-8" onerror="this.onerror=null;this.src='https://placehold.co/200x60/000080/FFFFFF?text=BTPN+Syariah';">
+            </div>
+            <h1 class="text-3xl md:text-6xl font-bold mb-4 animated-item delay-1">Kolaborasi, Inovasi, dan Optimalisasi Peran</h1>
+            <p class="text-xl md:text-3xl text-orange font-light animated-item delay-2">Menuju BTPN Syariah Unggul 2026</p>
+            <div class="progress-bar-container animated-item delay-3">
+                 <div class="w-full h-1.5 bg-white/20 rounded-full">
+                    <div class="progress-bar h-1.5 bg-orange rounded-full" style="width: 10%"></div>
+                 </div>
+            </div>
+        </section>
+
+        <!-- Slide 2: Agenda Training -->
+        <section id="slide-2" class="slide bg-blue text-white">
+            <div class="max-w-6xl w-full">
+                <h2 class="text-3xl md:text-4xl font-bold mb-10 text-center animated-item"><i class="fas fa-list-check text-orange mr-3"></i>Agenda Training</h2>
+                <ul class="space-y-4">
+                    <li class="animated-item delay-1 flex items-start space-x-4 text-base md:text-xl highlightable"><i class="fas fa-award mt-1 text-orange"></i><span><b>Refleksi & Apresiasi 2025:</b> Merayakan pencapaian sebagai fondasi.</span></li>
+                    <li class="animated-item delay-2 flex items-start space-x-4 text-base md:text-xl highlightable"><i class="fas fa-users-gear mt-1 text-orange"></i><span><b>Sinergi & Peran Divisi:</b> Memperjelas tanggung jawab dan alur kerja.</span></li>
+                    <li class="animated-item delay-3 flex items-start space-x-4 text-base md:text-xl highlightable"><i class="fas fa-tasks mt-1 text-orange"></i><span><b>Roadmap Proyek Strategis:</b> Menyelaraskan langkah untuk proyek masif.</span></li>
+                    <li class="animated-item delay-4 flex items-start space-x-4 text-base md:text-xl highlightable"><i class="fas fa-chart-line mt-1 text-orange"></i><span><b>Rencana Aksi 2026:</b> Merumuskan strategi improvement yang terukur.</span></li>
+                    <li class="animated-item delay-5 flex items-start space-x-4 text-base md:text-xl highlightable"><i class="fas fa-cogs mt-1 text-orange"></i><span><b>Optimalisasi One Solution:</b> Memaksimalkan tools untuk efisiensi.</span></li>
+                </ul>
+            </div>
+            <div class="progress-bar-container">
+                 <div class="w-full h-1.5 bg-white/20 rounded-full">
+                    <div class="progress-bar h-1.5 bg-orange rounded-full" style="width: 20%"></div>
+                 </div>
+            </div>
+        </section>
+        
+        <!-- Slide 3: Refleksi & Apresiasi 2025 -->
+        <section id="slide-3" class="slide bg-moss-green text-white">
+            <div class="text-center max-w-6xl mx-auto">
+                <h2 class="text-3xl md:text-4xl font-bold mb-10 animated-item"><i class="fas fa-trophy text-orange mr-3"></i>Refleksi & Apresiasi Pencapaian 2025</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                    <div class="card p-6 rounded-2xl text-center animated-item delay-1 highlightable">
+                        <p class="text-4xl md:text-5xl font-bold text-orange">15%</p>
+                        <p class="mt-2 text-sm md:text-base">Peningkatan Efisiensi Operasional</p>
+                    </div>
+                    <div class="card p-6 rounded-2xl text-center animated-item delay-2 highlightable">
+                        <p class="text-4xl md:text-5xl font-bold text-orange">20+</p>
+                        <p class="mt-2 text-sm md:text-base">Proyek Kolaborasi Lintas Divisi Sukses</p>
+                    </div>
+                    <div class="card p-6 rounded-2xl text-center animated-item delay-3 highlightable">
+                        <p class="text-4xl md:text-5xl font-bold text-orange">95%</p>
+                        <p class="mt-2 text-sm md:text-base">Tingkat Adopsi Fitur Baru One Solution</p>
+                    </div>
+                </div>
+                <p class="mt-10 text-base md:text-xl animated-item delay-4">Pencapaian ini adalah hasil kerja keras kita semua. Mari jadikan momentum untuk melompat lebih tinggi di 2026!</p>
+            </div>
+            <div class="progress-bar-container">
+                 <div class="w-full h-1.5 bg-white/20 rounded-full">
+                    <div class="progress-bar h-1.5 bg-orange rounded-full" style="width: 30%"></div>
+                 </div>
+            </div>
+        </section>
+
+        <!-- Slide 4: Memperkuat Kolaborasi -->
+        <section id="slide-4" class="slide bg-dark-gray text-white">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 items-center max-w-6xl mx-auto">
+                <div class="animated-item text-center md:text-left">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6"><i class="fas fa-sitemap text-orange mr-3"></i>Memperkuat Kolaborasi</h2>
+                    <p class="text-base md:text-lg leading-relaxed">Memahami peran kita adalah kunci. Tujuannya bukan hanya menyelesaikan tugas, tapi menciptakan nilai tambah melalui sinergi.</p>
+                </div>
+                <div class="space-y-6">
+                    <div class="flex items-start space-x-4 animated-item delay-1 highlightable">
+                        <div class="icon-circle bg-blue"><i class="fas fa-bullseye"></i></div>
+                        <div><h3 class="font-semibold text-lg md:text-xl">Clarity (Kejelasan)</h3><p class="text-sm md:text-base">Setiap divisi memiliki KPI yang jelas dan terhubung dengan tujuan besar perusahaan.</p></div>
+                    </div>
+                    <div class="flex items-start space-x-4 animated-item delay-2 highlightable">
+                        <div class="icon-circle bg-moss-green"><i class="fas fa-link"></i></div>
+                        <div><h3 class="font-semibold text-lg md:text-xl">Interface (Antarmuka)</h3><p class="text-sm md:text-base">Menentukan titik temu dan alur serah terima pekerjaan antar divisi secara efisien.</p></div>
+                    </div>
+                    <div class="flex items-start space-x-4 animated-item delay-3 highlightable">
+                        <div class="icon-circle bg-orange"><i class="fas fa-comments"></i></div>
+                        <div><h3 class="font-semibold text-lg md:text-xl">Communication (Komunikasi)</h3><p class="text-sm md:text-base">Membangun jalur komunikasi yang terbuka, proaktif, dan berbasis solusi.</p></div>
+                    </div>
+                </div>
+            </div>
+            <div class="progress-bar-container">
+                 <div class="w-full h-1.5 bg-white/20 rounded-full">
+                    <div class="progress-bar h-1.5 bg-orange rounded-full" style="width: 40%"></div>
+                 </div>
+            </div>
+        </section>
+
+        <!-- Slide 5: The Do's & Don'ts -->
+        <section id="slide-5" class="slide bg-blue text-white">
+            <div class="max-w-6xl w-full mx-auto">
+                <h2 class="text-3xl md:text-4xl font-bold mb-10 text-center animated-item">Praktik Terbaik Kolaborasi</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Do's -->
+                    <div class="animated-item delay-1 highlightable p-4 rounded-lg">
+                        <h3 class="text-2xl md:text-3xl font-semibold mb-4 text-green-300"><i class="fas fa-check-circle mr-2"></i>The Do's</h3>
+                        <ul class="space-y-3 list-disc list-inside text-sm md:text-lg">
+                            <li>Berbagi informasi relevan secara proaktif.</li>
+                            <li>Memberikan feedback yang konstruktif dan tepat waktu.</li>
+                            <li>Memahami prioritas dan tantangan divisi lain.</li>
+                            <li>Menggunakan platform terpusat (One Solution) untuk update.</li>
+                        </ul>
+                    </div>
+                    <!-- Don'ts -->
+                    <div class="animated-item delay-2 highlightable p-4 rounded-lg">
+                        <h3 class="text-2xl md:text-3xl font-semibold mb-4 text-red-300"><i class="fas fa-times-circle mr-2"></i>The Don'ts</h3>
+                        <ul class="space-y-3 list-disc list-inside text-sm md:text-lg">
+                            <li>Bekerja dalam "silo" dan menahan informasi.</li>
+                            <li>Menunda respon yang menghambat alur kerja tim lain.</li>
+                            <li>Membuat asumsi tanpa melakukan klarifikasi.</li>
+                            <li>Menyalahkan divisi lain saat terjadi masalah.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="progress-bar-container">
+                 <div class="w-full h-1.5 bg-white/20 rounded-full">
+                    <div class="progress-bar h-1.5 bg-orange rounded-full" style="width: 50%"></div>
+                 </div>
+            </div>
+        </section>
+
+        <!-- Slide 6: Menyongsong Project Masif -->
+        <section id="slide-6" class="slide bg-navy-blue text-white">
+             <div class="max-w-6xl w-full text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-10 animated-item"><i class="fas fa-rocket text-orange mr-3"></i>Menyongsong Proyek Strategis 2026</h2>
+                <!-- Tampilan Desktop (Timeline) -->
+                <div class="relative w-full p-8 hidden md:block">
+                    <div class="absolute left-1/2 top-16 bottom-16 w-1 bg-white/30 rounded-full"></div>
+                    <div class="relative flex justify-start mb-12 animated-item delay-1 highlightable"><div class="w-5/12 text-right pr-12"><h3 class="font-bold text-xl">Q1: Perencanaan & Kick-off</h3><p>Finalisasi konsep, pembentukan tim inti, dan alokasi sumber daya.</p></div><div class="absolute left-1/2 -translate-x-1/2 w-8 h-8 bg-orange rounded-full border-4 border-navy-blue flex items-center justify-center"><i class="fas fa-flag-checkered"></i></div></div>
+                    <div class="relative flex justify-end mb-12 animated-item delay-2 highlightable"><div class="absolute left-1/2 -translate-x-1/2 top-0 w-8 h-8 bg-orange rounded-full border-4 border-navy-blue flex items-center justify-center"><i class="fas fa-cogs"></i></div><div class="w-5/12 text-left pl-12"><h3 class="font-bold text-xl">Q2: Pengembangan & Uji Coba</h3><p>Fase development, integrasi sistem, dan testing internal (alpha).</p></div></div>
+                    <div class="relative flex justify-start mb-12 animated-item delay-3 highlightable"><div class="w-5/12 text-right pr-12"><h3 class="font-bold text-xl">Q3: Implementasi Bertahap</h3><p>Pilot project di cabang terpilih dan pengumpulan feedback (beta).</p></div><div class="absolute left-1/2 -translate-x-1/2 w-8 h-8 bg-orange rounded-full border-4 border-navy-blue flex items-center justify-center"><i class="fas fa-users"></i></div></div>
+                    <div class="relative flex justify-end animated-item delay-4 highlightable"><div class="absolute left-1/2 -translate-x-1/2 top-0 w-8 h-8 bg-orange rounded-full border-4 border-navy-blue flex items-center justify-center"><i class="fas fa-paper-plane"></i></div><div class="w-5/12 text-left pl-12"><h3 class="font-bold text-xl">Q4: Peluncuran & Optimalisasi</h3><p>Go-live nasional, monitoring performa, dan iterasi berkelanjutan.</p></div></div>
+                </div>
+                <!-- Tampilan Mobile (List) -->
+                <div class="space-y-6 text-left md:hidden">
+                    <div class="flex items-start space-x-4 animated-item delay-1 highlightable"><div class="icon-circle bg-orange mt-1"><i class="fas fa-flag-checkered"></i></div><div><h3 class="font-bold text-lg">Q1: Perencanaan & Kick-off</h3><p class="text-sm">Finalisasi konsep, pembentukan tim inti, dan alokasi sumber daya.</p></div></div>
+                    <div class="flex items-start space-x-4 animated-item delay-2 highlightable"><div class="icon-circle bg-orange mt-1"><i class="fas fa-cogs"></i></div><div><h3 class="font-bold text-lg">Q2: Pengembangan & Uji Coba</h3><p class="text-sm">Fase development, integrasi sistem, dan testing internal (alpha).</p></div></div>
+                    <div class="flex items-start space-x-4 animated-item delay-3 highlightable"><div class="icon-circle bg-orange mt-1"><i class="fas fa-users"></i></div><div><h3 class="font-bold text-lg">Q3: Implementasi Bertahap</h3><p class="text-sm">Pilot project di cabang terpilih dan pengumpulan feedback (beta).</p></div></div>
+                    <div class="flex items-start space-x-4 animated-item delay-4 highlightable"><div class="icon-circle bg-orange mt-1"><i class="fas fa-paper-plane"></i></div><div><h3 class="font-bold text-lg">Q4: Peluncuran & Optimalisasi</h3><p class="text-sm">Go-live nasional, monitoring performa, dan iterasi berkelanjutan.</p></div></div>
+                </div>
+            </div>
+            <div class="progress-bar-container">
+                 <div class="w-full h-1.5 bg-white/20 rounded-full">
+                    <div class="progress-bar h-1.5 bg-orange rounded-full" style="width: 60%"></div>
+                 </div>
+            </div>
+        </section>
+
+        <!-- Slide 7: Rencana Aksi & Improvement 2026 -->
+        <section id="slide-7" class="slide bg-moss-green text-white">
+            <div class="max-w-6xl w-full">
+                <h2 class="text-3xl md:text-4xl font-bold mb-10 text-center animated-item"><i class="fas fa-chart-line text-orange mr-3"></i>Fokus Area Improvement 2026</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 text-center">
+                    <div class="card p-6 rounded-2xl animated-item delay-1 highlightable">
+                        <div class="icon-circle bg-blue text-white mx-auto mb-4"><i class="fas fa-user-friends"></i></div>
+                        <h3 class="text-lg md:text-xl font-bold mb-2">Customer Centricity</h3>
+                        <p class="text-sm md:text-base">Mengintegrasikan feedback nasabah ke dalam setiap siklus pengembangan produk.</p>
+                    </div>
+                    <div class="card p-6 rounded-2xl animated-item delay-2 highlightable">
+                        <div class="icon-circle bg-orange text-white mx-auto mb-4"><i class="fas fa-database"></i></div>
+                        <h3 class="text-lg md:text-xl font-bold mb-2">Data-Driven Decision</h3>
+                        <p class="text-sm md:text-base">Meningkatkan kapabilitas analisis data untuk pengambilan keputusan yang lebih akurat.</p>
+                    </div>
+                    <div class="card p-6 rounded-2xl animated-item delay-3 highlightable">
+                        <div class="icon-circle bg-navy-blue text-white mx-auto mb-4"><i class="fas fa-bolt"></i></div>
+                        <h3 class="text-lg md:text-xl font-bold mb-2">Agile Process</h3>
+                        <p class="text-sm md:text-base">Mengadopsi metodologi kerja yang lebih lincah untuk merespon perubahan pasar lebih cepat.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="progress-bar-container">
+                 <div class="w-full h-1.5 bg-white/20 rounded-full">
+                    <div class="progress-bar h-1.5 bg-orange rounded-full" style="width: 70%"></div>
+                 </div>
+            </div>
+        </section>
+
+        <!-- Slide 8: Optimalisasi One Solution -->
+        <section id="slide-8" class="slide bg-blue text-white">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 items-center max-w-6xl mx-auto">
+                <div class="animated-item text-center md:text-left">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6"><i class="fas fa-mobile-alt text-orange mr-3"></i>Optimalisasi One Solution</h2>
+                    <p class="text-base md:text-lg leading-relaxed">One Solution bukan hanya aplikasi, tapi ekosistem kerja kita. Mari maksimalkan potensinya.</p>
+                </div>
+                <div class="space-y-6">
+                    <div class="card p-4 rounded-lg flex items-start space-x-4 animated-item delay-1 highlightable">
+                        <div class="icon-circle bg-orange text-white text-xl"><i class="fas fa-tachometer-alt"></i></div>
+                        <div><h3 class="font-semibold text-base md:text-lg">Dashboard Terpusat</h3><p class="text-xs md:text-sm">Manfaatkan dashboard untuk memonitor progress proyek secara real-time.</p></div>
+                    </div>
+                    <div class="card p-4 rounded-lg flex items-start space-x-4 animated-item delay-2 highlightable">
+                        <div class="icon-circle bg-moss-green text-white text-xl"><i class="fas fa-comments"></i></div>
+                        <div><h3 class="font-semibold text-base md:text-lg">Fitur Kolaborasi</h3><p class="text-xs md:text-sm">Gunakan fitur @mention dan task assignment untuk komunikasi yang efisien.</p></div>
+                    </div>
+                    <div class="card p-4 rounded-lg flex items-start space-x-4 animated-item delay-3 highlightable">
+                        <div class="icon-circle bg-navy-blue text-white text-xl"><i class="fas fa-book"></i></div>
+                        <div><h3 class="font-semibold text-base md:text-lg">Knowledge Base</h3><p class="text-xs md:text-sm">Akses modul training dan SOP terbaru langsung dari aplikasi.</p></div>
+                    </div>
+                </div>
+            </div>
+            <div class="progress-bar-container">
+                 <div class="w-full h-1.5 bg-white/20 rounded-full">
+                    <div class="progress-bar h-1.5 bg-orange rounded-full" style="width: 80%"></div>
+                 </div>
+            </div>
+        </section>
+        
+        <!-- Slide 9: Q&A -->
+        <section id="slide-9" class="slide bg-dark-gray text-white flex-col text-center">
+            <div class="animated-item">
+                <i class="fas fa-question-circle text-orange text-6xl md:text-7xl mb-6"></i>
+            </div>
+            <h2 class="text-4xl md:text-5xl font-bold mb-4 animated-item delay-1">Sesi Diskusi</h2>
+            <p class="text-lg md:text-2xl font-light animated-item delay-2">Mari kita diskusikan ide, masukan, dan pertanyaan Anda.</p>
+            <div class="progress-bar-container">
+                 <div class="w-full h-1.5 bg-white/20 rounded-full">
+                    <div class="progress-bar h-1.5 bg-orange rounded-full" style="width: 90%"></div>
+                 </div>
+            </div>
+        </section>
+
+        <!-- Slide 10: Penutup -->
+        <section id="slide-10" class="slide bg-navy-blue text-white flex-col text-center">
+            <div class="animated-item">
+                <img src="https://www.btpnsyariah.com/image/logo-header.png" alt="BTPN Syariah Logo" class="h-12 md:h-16 mx-auto mb-8" onerror="this.onerror=null;this.src='https://placehold.co/200x60/000080/FFFFFF?text=BTPN+Syariah';">
+            </div>
+            <h2 class="text-4xl md:text-5xl font-bold mb-4 animated-item delay-1">Terima Kasih</h2>
+            <p class="text-base md:text-xl font-light mb-8 animated-item delay-2">Kolaborasi kita hari ini adalah awal dari kesuksesan di tahun 2026.</p>
+            <div class="card p-6 rounded-2xl text-left animated-item delay-3 max-w-md w-full highlightable">
+                <h3 class="font-bold text-lg md:text-xl mb-2 text-orange"><i class="fas fa-arrow-right mr-2"></i>Langkah Selanjutnya:</h3>
+                <ul class="list-disc list-inside text-sm md:text-base">
+                    <li>Resume training akan dikirimkan via email.</li>
+                    <li>Setiap divisi menyusun action plan berdasarkan hasil diskusi.</li>
+                    <li>Follow-up meeting akan diadakan pada [Tanggal].</li>
+                </ul>
+            </div>
+            <div class="progress-bar-container">
+                 <div class="w-full h-1.5 bg-white/20 rounded-full">
+                    <div class="progress-bar h-1.5 bg-orange rounded-full" style="width: 100%"></div>
+                 </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Navigasi -->
+    <div id="navigation" class="fixed bottom-5 left-5 z-50 flex space-x-3">
+        <button id="prevBtn" class="nav-button w-12 h-12 bg-white/80 backdrop-blur-sm text-gray-800 rounded-full shadow-lg flex items-center justify-center text-xl">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <button id="nextBtn" class="nav-button w-12 h-12 bg-white/80 backdrop-blur-sm text-gray-800 rounded-full shadow-lg flex items-center justify-center text-xl">
+            <i class="fas fa-arrow-right"></i>
+        </button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.slide');
+            const nextBtn = document.getElementById('nextBtn');
+            const prevBtn = document.getElementById('prevBtn');
+            let currentSlide = 0;
+            const totalSlides = slides.length;
+
+            function goToSlide(slideIndex) {
+                // Batasi index agar tidak keluar dari rentang slide (looping)
+                if (slideIndex >= totalSlides) {
+                    slideIndex = 0;
+                }
+                if (slideIndex < 0) {
+                    slideIndex = totalSlides - 1;
+                }
+
+                const oldSlide = slides[currentSlide];
+                const newSlide = slides[slideIndex];
+
+                // Hapus kelas 'prev' dari semua slide untuk reset
+                slides.forEach(slide => {
+                    slide.classList.remove('prev');
+                });
+
+                // Animasikan slide yang lama keluar
+                oldSlide.classList.remove('active');
+                oldSlide.classList.add('prev');
+
+                // Animasikan slide yang baru masuk
+                newSlide.classList.add('active');
+
+                currentSlide = slideIndex;
+            }
+
+            nextBtn.addEventListener('click', () => {
+                goToSlide(currentSlide + 1);
+            });
+
+            prevBtn.addEventListener('click', () => {
+                goToSlide(currentSlide - 1);
+            });
+            
+            // Navigasi menggunakan keyboard arrow keys
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') {
+                    goToSlide(currentSlide + 1);
+                } else if (e.key === 'ArrowLeft') {
+                    goToSlide(currentSlide - 1);
+                }
+            });
+
+            // Inisialisasi slide pertama
+            // Tidak perlu memanggil goToSlide(0) karena slide pertama sudah memiliki kelas 'active' di HTML
+        });
+    </script>
+
+</body>
+</html>
