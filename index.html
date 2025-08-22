@@ -48,6 +48,7 @@
             height: 100vh;
             overflow: hidden;
             position: relative;
+            touch-action: pan-y; /* Memungkinkan scroll vertikal jika ada, tapi kita handle horizontal */
         }
 
         .slide {
@@ -417,6 +418,7 @@
             const slides = document.querySelectorAll('.slide');
             const nextBtn = document.getElementById('nextBtn');
             const prevBtn = document.getElementById('prevBtn');
+            const slideContainer = document.querySelector('.slide-container');
             let currentSlide = 0;
             const totalSlides = slides.length;
 
@@ -455,17 +457,56 @@
                 goToSlide(currentSlide - 1);
             });
             
-            // Navigasi menggunakan keyboard arrow keys
+            // Navigasi menggunakan keyboard & pointer presentasi
             document.addEventListener('keydown', (e) => {
-                if (e.key === 'ArrowRight') {
+                if (e.key === 'ArrowRight' || e.key === 'PageDown') {
                     goToSlide(currentSlide + 1);
-                } else if (e.key === 'ArrowLeft') {
+                } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
                     goToSlide(currentSlide - 1);
                 }
             });
 
-            // Inisialisasi slide pertama
-            // Tidak perlu memanggil goToSlide(0) karena slide pertama sudah memiliki kelas 'active' di HTML
+            // --- KONTROL POINTER & SWIPE BARU ---
+            let touchStartX = 0;
+            let touchEndX = 0;
+
+            function handleGesture() {
+                const swipeThreshold = 50; // Jarak minimal untuk dianggap swipe
+                if (touchEndX < touchStartX - swipeThreshold) {
+                    goToSlide(currentSlide + 1); // Swipe ke kiri
+                }
+                if (touchEndX > touchStartX + swipeThreshold) {
+                    goToSlide(currentSlide - 1); // Swipe ke kanan
+                }
+            }
+
+            // Untuk perangkat sentuh (touch)
+            slideContainer.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+
+            slideContainer.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleGesture();
+            });
+
+            // Untuk mouse (pointer)
+            slideContainer.addEventListener('pointerdown', (e) => {
+                // Hanya aktifkan untuk mouse, bukan pen atau touch
+                if (e.pointerType === 'mouse') {
+                    touchStartX = e.clientX;
+                    // Mencegah default behavior seperti seleksi teks saat drag
+                    e.preventDefault();
+                }
+            });
+
+            slideContainer.addEventListener('pointerup', (e) => {
+                 if (e.pointerType === 'mouse') {
+                    touchEndX = e.clientX;
+                    handleGesture();
+                }
+            });
+
         });
     </script>
 
